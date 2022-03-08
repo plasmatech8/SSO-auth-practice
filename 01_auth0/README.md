@@ -10,6 +10,7 @@ Contents:
   - [02. Configure Auth0](#02-configure-auth0)
   - [03. Install SDK](#03-install-sdk)
   - [04. SDK Usage](#04-sdk-usage)
+  - [05. SDK Implementation](#05-sdk-implementation)
 
 ## 01. Init
 
@@ -48,4 +49,57 @@ await client.logout();
 
 ```
 
-...
+## 05. SDK Implementation
+
+Under `auth_config.js` we have our config object, which contains the "Domain" and "Client ID"
+taken from the Auth0 console.
+
+Under `authService.js` we have helper methods used to log in:
+```js
+async function createClient() {
+    let auth0Client = await createAuth0Client({
+        domain: config.domain,
+        client_id: config.clientId
+    });
+    return auth0Client;
+}
+
+async function loginWithPopup(client, options) {
+    popupOpen.set(true);
+    try {
+        await client.loginWithPopup(options);
+        user.set(await client.getUser());
+        isAuthenticated.set(true);
+    } catch (e) {
+        console.error(e);
+    } finally {
+        popupOpen.set(false);
+    }
+}
+
+function logout(client) {
+  return client.logout();
+}
+```
+
+In `App.svelte` we have methods:
+```js
+onMount(async () => {
+    auth0Client = await auth.createClient();
+    isAuthenticated.set(await auth0Client.isAuthenticated());
+    user.set(await auth0Client.getUser());
+    loading = false;
+});
+
+function login() {
+    auth.loginWithPopup(auth0Client);
+}
+
+function logout() {
+    auth.logout(auth0Client);
+}
+```
+
+OnMount will check if the user is currently authenticated and update the global state/store.
+Note that we cannot simply use `login` because the user may already be logged in and does not need a dialog.
+Plus, the user may not want to be logged in automatically.

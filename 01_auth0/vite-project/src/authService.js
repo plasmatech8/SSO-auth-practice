@@ -9,23 +9,16 @@ async function createClient() {
     domain: config.domain,
     client_id: config.clientId
   });
-
   return auth0Client;
 }
 
 async function loginWithPopup(client, options) {
   popupOpen.set(true);
   try {
-    console.log('???')
-    console.log(options)
     await client.loginWithPopup(options);
-    console.log('???')
-
     user.set(await client.getUser());
-    console.log('???')
     isAuthenticated.set(true);
   } catch (e) {
-    // eslint-disable-next-line
     console.error(e);
   } finally {
     popupOpen.set(false);
