@@ -1,12 +1,15 @@
 # Auth0 Integration Practice
 
-Following Auth0 getting started instructions with a new SPA app.
+Following:
+* Auth0 getting started instructions with a new SPA app
+* [Authenticating Svelte Applications](https://auth0.com/blog/authenticating-svelte-apps/)
 
 Contents:
 - [Auth0 Integration Practice](#auth0-integration-practice)
   - [01. Init](#01-init)
   - [02. Configure Auth0](#02-configure-auth0)
   - [03. Install SDK](#03-install-sdk)
+  - [04. SDK Usage](#04-sdk-usage)
 
 ## 01. Init
 
@@ -30,3 +33,19 @@ npm install
 ```bash
 npm install @auth0/auth0-spa-js
 ```
+
+## 04. SDK Usage
+
+```js
+let client = await createAuth0Client({
+    domain: config.domain,
+    client_id: config.clientId
+});
+// ...
+await client.loginWithPopup(options);
+// ...
+await client.logout();
+
+```
+
+...
