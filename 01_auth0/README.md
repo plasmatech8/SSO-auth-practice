@@ -25,9 +25,9 @@ npm install
 1. Go to Application Settings
 2. Go to your application (or create one)
 3. Copy the "Client ID" and "Domain"
-4. Configure "Allowed Callback URLs" to `https://localhost3000` (required for log-in)
-5. Configure "Allowed Logout URLs" to `https://localhost:3000` (required for log-out)
-6. Configure "Allowed Web Origins" to `https://localhost:3000` (required for refreshing tokens)
+4. Configure "Allowed Callback URLs" to `http://localhost3000` (required for log-in)
+5. Configure "Allowed Logout URLs" to `http://localhost:3000` (required for log-out)
+6. Configure "Allowed Web Origins" to `http://localhost:3000` (required for refreshing tokens)
 
 ## 03. Install SDK
 
